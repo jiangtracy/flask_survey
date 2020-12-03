@@ -10,6 +10,7 @@ debug = DebugToolbarExtension(app)
 
 responses = []
 
+
 @app.route('/')
 def display_survey_info():
     """Renders the survey start root page"""
@@ -29,7 +30,7 @@ def display_survey_question(question_idx):
 def save_answer():
     """Saves the survey question answer and either redirects
     to next page or renders the completion page"""
-    
+
     answer = request.form.get('answer')
     responses.append(answer)
     
@@ -38,4 +39,11 @@ def save_answer():
     if next_idx < len(survey.questions):
         return redirect(f'/questions/{next_idx}')
     else:
-        return render_template('completion.html')
+        return redirect('/complete')
+
+
+@app.route('/complete')
+def display_completion():
+    """ Renders the Completion page when survey is completed """
+
+    return render_template('completion.html')
