@@ -4,4 +4,14 @@
 
   <h1>Thanks for completing this survey!</h1>
 
+  {% for result in results %}
+
+    <p>{{ result['question'] }} {{ result['answer'] }} </p>
+
+    {% if result.comment %}
+      <p>{{ result['comment'] }}</p>
+
+    {% endif %}
+  {% endfor %}
+
 {% endblock %}

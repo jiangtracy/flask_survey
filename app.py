@@ -43,6 +43,7 @@ def display_survey_question(survey_code, question_idx):
     # prevent user from answering the quesitions if 
     # survey is already completed.
     if len(session[RESPONSE_KEY]) == len(survey.questions):
+ 
         flash("The survey has already been completed!")
         return redirect(f'/{survey_code}/complete')
 
@@ -63,10 +64,19 @@ def save_answer(survey_code):
     """Saves the survey question answer and either redirects
     to next page or renders the completion page"""
     survey = surveys.get(survey_code)
+    ques = survey.questions[len(session[RESPONSE_KEY]) - 1].question
     answer = request.form.get('answer')
+    comment = request.form.get('comment')
 
+    # Adds user answer to the session
     responses = session[RESPONSE_KEY]
-    responses.append(answer)
+
+    responses.append({
+        "question": ques,
+        "answer": answer, 
+        "comment": comment
+        })
+
     session[RESPONSE_KEY] = responses
 
     next_idx = len(session[RESPONSE_KEY])
@@ -80,5 +90,5 @@ def save_answer(survey_code):
 @app.route('/<survey_code>/complete')
 def display_completion(survey_code):
     """ Renders the Completion page when survey is completed """
-
-    return render_template('completion.html')
+    results = session[RESPONSE_KEY]
+    return render_template('completion.html', results=results)
