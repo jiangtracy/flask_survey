@@ -5,8 +5,8 @@
   <p>
     {{ survey.instructions }}
   </p>
-
-  <form action="/questions/0" method="POST">
+  <!-- TO DO: Change action "/begin" -->
+  <form action="/{{ survey_code }}/questions/0" method="POST">
     <button>Start!</button>
   </form>
 

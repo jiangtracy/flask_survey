@@ -3,8 +3,7 @@
 
   <h1>{{ question.question }}</h1>
 
-  <form action="/answer" method="POST">
-
+  <form action="/{{ survey_code }}/answer" method="POST">
       <!-- you should have one item like this for every choice -->
       {% for choice in question.choices %}
       <p>
